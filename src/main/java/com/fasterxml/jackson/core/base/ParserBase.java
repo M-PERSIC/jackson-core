@@ -707,50 +707,60 @@ public abstract class ParserBase extends ParserMinimalBase
         }
         return _getNumberDouble();
     }
-
     @Override // since 2.15
-    public Object getNumberValueDeferred() throws IOException
-    {
+    public Object getNumberValueDeferred() throws IOException {
         if (_currToken == JsonToken.VALUE_NUMBER_INT) {
-            if (_numTypesValid == NR_UNKNOWN) {
-                _parseNumericValue(NR_UNKNOWN);
-            }
-            if ((_numTypesValid & NR_INT) != 0) {
-                return _numberInt;
-            }
-            if ((_numTypesValid & NR_LONG) != 0) {
-                return _numberLong;
-            }
-            if ((_numTypesValid & NR_BIGINT) != 0) {
-                // from _getBigInteger()
-                if (_numberBigInt != null) {
-                    return _numberBigInt;
-                } else if (_numberString != null) {
-                    return _numberString;
-                }
-                return _getBigInteger(); // will fail
-            }
-            _throwInternal();
+            return handleIntegerValue();
         }
         if (_currToken == JsonToken.VALUE_NUMBER_FLOAT) {
-            // Ok this gets tricky since flags are not set quite as with
-            // integers
-            if ((_numTypesValid & NR_BIGDECIMAL) != 0) {
-                return _getBigDecimal();
-            }
-            if ((_numTypesValid & NR_DOUBLE) != 0) { // sanity check
-                return _getNumberDouble();
-            }
-            if ((_numTypesValid & NR_FLOAT) != 0) {
-                return _getNumberFloat();
-            }
-            // Should be able to rely on this; might want to set _numberString
-            // but state keeping looks complicated so don't do that yet
-            return _textBuffer.contentsAsString();
+            return handleFloatingValue();
         }
-        // We'll just force exception by:
+        // fallback for any other token type
         return getNumberValue();
     }
+
+    private Object handleIntegerValue() throws IOException {
+        if (_numTypesValid == NR_UNKNOWN) {
+            _parseNumericValue(NR_UNKNOWN);
+        }
+
+        if ((_numTypesValid & NR_INT) != 0) {
+            return _numberInt;
+        }
+        if ((_numTypesValid & NR_LONG) != 0) {
+            return _numberLong;
+        }
+        if ((_numTypesValid & NR_BIGINT) != 0) {
+            return resolveBigInteger();
+        }
+
+        _throwInternal();
+        return null; // unreachable, added for compiler completeness
+    }
+
+    private Object resolveBigInteger() throws JsonParseException {
+        if (_numberBigInt != null) {
+            return _numberBigInt;
+        }
+        if (_numberString != null) {
+            return _numberString;
+        }
+        return _getBigInteger(); // fallback
+    }
+
+    private Object handleFloatingValue() throws IOException {
+        if ((_numTypesValid & NR_BIGDECIMAL) != 0) {
+            return _getBigDecimal();
+        }
+        if ((_numTypesValid & NR_DOUBLE) != 0) {
+            return _getNumberDouble();
+        }
+        if ((_numTypesValid & NR_FLOAT) != 0) {
+            return _getNumberFloat();
+        }
+        return _textBuffer.contentsAsString();
+    }
+
 
     @Override
     public NumberType getNumberType() throws IOException
