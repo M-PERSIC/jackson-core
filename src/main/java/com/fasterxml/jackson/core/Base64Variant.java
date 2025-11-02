@@ -78,19 +78,19 @@ public final class Base64Variant
     /**
      * Decoding table used for base 64 decoding.
      */
-    private final transient int[] _asciiToBase64 = new int[128];
+    private final transient int[] asciiToBase64 = new int[128];
 
     /**
      * Encoding table used for base 64 decoding when output is done
      * as characters.
      */
-    private final transient char[] _base64ToAsciiC = new char[64];
+    private final transient char[] base64ToAsciiC = new char[64];
 
     /**
      * Alternative encoding table used for base 64 decoding when output is done
      * as ascii bytes.
      */
-    private final transient byte[] _base64ToAsciiB = new byte[64];
+    private final transient byte[] base64ToAsciiB = new byte[64];
 
     /*
     /**********************************************************
@@ -106,7 +106,7 @@ public final class Base64Variant
      *<p>
      * Also: must not be private, accessed from `BaseVariants`
      */
-    final String _name;
+    final String name;
 
     /**
      * Character used for padding, if any ({@link #PADDING_CHAR_NONE} if not).
