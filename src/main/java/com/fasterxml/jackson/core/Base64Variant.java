@@ -45,7 +45,7 @@ public final class Base64Variant
         PADDING_ALLOWED
     }
 
-    private final static int INT_SPACE = 0x20;
+    private static final int INT_SPACE = 0x20;
 
     // We'll only serialize name
     private static final long serialVersionUID = 1L;
@@ -54,20 +54,20 @@ public final class Base64Variant
      * Placeholder used by "no padding" variant, to be used when a character
      * value is needed.
      */
-    protected final static char PADDING_CHAR_NONE = '\0';
+    protected static final char PADDING_CHAR_NONE = '\0';
 
     /**
      * Marker used to denote ascii characters that do not correspond
      * to a 6-bit value (in this variant), and is not used as a padding
      * character.
      */
-    public final static int BASE64_VALUE_INVALID = -1;
+    public static final int BASE64_VALUE_INVALID = -1;
 
     /**
      * Marker used to denote ascii character (in decoding table) that
      * is the padding character using this variant (if any).
      */
-    public final static int BASE64_VALUE_PADDING = -2;
+    public static final int BASE64_VALUE_PADDING = -2;
 
     /*
     /**********************************************************
