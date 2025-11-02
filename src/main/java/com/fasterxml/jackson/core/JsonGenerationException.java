@@ -17,17 +17,26 @@ public class JsonGenerationException
 {
     private final static long serialVersionUID = 123; // eclipse complains otherwise
 
-    @Deprecated // since 2.7
+    /**
+     * @deprecated since 2.7
+     */
+    @Deprecated
     public JsonGenerationException(Throwable rootCause) {
         super(rootCause, null);
     }
 
-    @Deprecated // since 2.7
+    /**
+     * @deprecated since 2.7
+     */
+    @Deprecated
     public JsonGenerationException(String msg) {
         super(msg, null);
     }
 
-    @Deprecated // since 2.7
+    /**
+     * @deprecated since 2.7
+     */
+    @Deprecated
     public JsonGenerationException(String msg, Throwable rootCause) {
         super(msg, rootCause, null);
     }
