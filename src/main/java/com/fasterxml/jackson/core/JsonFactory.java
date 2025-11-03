@@ -1263,7 +1263,7 @@ public class JsonFactory
      * @since 2.1
      */
     @Override
-    public JsonParser createParser(InputStream in) throws IOException, JsonParseException {
+    public JsonParser createParser(InputStream in) throws IOException {
         IOContext ctxt = _createContext(_createContentReference(in), false);
         return _createParser(_decorate(in, ctxt), ctxt);
     }
@@ -1283,7 +1283,7 @@ public class JsonFactory
      * @since 2.1
      */
     @Override
-    public JsonParser createParser(Reader r) throws IOException, JsonParseException {
+    public JsonParser createParser(Reader r) throws IOException {
         // false -> we do NOT own Reader (did not create it)
         IOContext ctxt = _createContext(_createContentReference(r), false);
         return _createParser(_decorate(r, ctxt), ctxt);
@@ -1296,7 +1296,7 @@ public class JsonFactory
      * @since 2.1
      */
     @Override
-    public JsonParser createParser(byte[] data) throws IOException, JsonParseException {
+    public JsonParser createParser(byte[] data) throws IOException {
         IOContext ctxt = _createContext(_createContentReference(data), true);
         if (_inputDecorator != null) {
             InputStream in = _inputDecorator.decorate(ctxt, data, 0, data.length);
@@ -1318,7 +1318,7 @@ public class JsonFactory
      * @since 2.1
      */
     @Override
-    public JsonParser createParser(byte[] data, int offset, int len) throws IOException, JsonParseException {
+    public JsonParser createParser(byte[] data, int offset, int len) throws IOException {
         _checkRangeBoundsForByteArray(data, offset, len);
         IOContext ctxt = _createContext(_createContentReference(data, offset, len), true);
         // [JACKSON-512]: allow wrapping with InputDecorator
