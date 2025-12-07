@@ -807,7 +807,9 @@ public class UTF8DataInputJsonParser
             break;
         case '.': // as per [core#611]
             t = _parseFloatThatStartsWithPeriod(false, false);
-        case '0':
+            // Fix: previously missing break caused switch fall-through, overwriting the parsed '.' value.
+            break;
+            case '0':
         case '1':
         case '2':
         case '3':
