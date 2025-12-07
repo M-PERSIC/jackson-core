@@ -205,14 +205,14 @@ public final class CharTypes
         }
     }
 
-    public static int[] getInputCodeLatin1() { return sInputCodes; }
-    public static int[] getInputCodeUtf8() { return sInputCodesUTF8; }
+    public static int[] getInputCodeLatin1() { return sInputCodes.clone(); }
+    public static int[] getInputCodeUtf8() { return sInputCodesUTF8.clone(); }
 
-    public static int[] getInputCodeLatin1JsNames() { return sInputCodesJsNames; }
-    public static int[] getInputCodeUtf8JsNames() { return sInputCodesUtf8JsNames; }
+    public static int[] getInputCodeLatin1JsNames() { return sInputCodesJsNames.clone(); }
+    public static int[] getInputCodeUtf8JsNames() { return sInputCodesUtf8JsNames.clone(); }
 
-    public static int[] getInputCodeComment() { return sInputCodesComment; }
-    public static int[] getInputCodeWS() { return sInputCodesWS; }
+    public static int[] getInputCodeComment() { return sInputCodesComment.clone(); }
+    public static int[] getInputCodeWS() { return sInputCodesWS.clone(); }
 
     /**
      * Accessor for getting a read-only encoding table for first 128 Unicode
@@ -223,7 +223,7 @@ public final class CharTypes
      *
      * @return 128-entry {@code int[]} that contains escape definitions
      */
-    public static int[] get7BitOutputEscapes() { return sOutputEscapes128; }
+    public static int[] get7BitOutputEscapes() { return sOutputEscapes128.clone(); }
 
     /**
      * Alternative to {@link #get7BitOutputEscapes()} when a non-standard quote character
@@ -238,7 +238,7 @@ public final class CharTypes
      */
     public static int[] get7BitOutputEscapes(int quoteChar) {
         if (quoteChar == '"') {
-            return sOutputEscapes128;
+            return sOutputEscapes128.clone();
         }
         return AltEscapes.instance.escapesFor(quoteChar);
     }
@@ -258,9 +258,9 @@ public final class CharTypes
     public static int[] get7BitOutputEscapes(int quoteChar, boolean escapeSlash) {
         if (quoteChar == '"') {
             if (escapeSlash) {
-                return sOutputEscapes128WithSlash;
+                return sOutputEscapes128WithSlash.clone();
             }
-            return sOutputEscapes128;
+            return sOutputEscapes128.clone();
         }
         return AltEscapes.instance.escapesFor(quoteChar, escapeSlash);
     }
@@ -372,7 +372,7 @@ public final class CharTypes
                 }
                 _altEscapes[quoteChar] = esc;
             }
-            return esc;
+            return esc.clone();
         }
 
         // @since 2.17
@@ -387,7 +387,7 @@ public final class CharTypes
                 esc['/'] = '/';
                 _altEscapesWithSlash[quoteChar] = esc;
             }
-            return esc;
+            return esc.clone();
         }
     }
 }
