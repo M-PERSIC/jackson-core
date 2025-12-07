@@ -21,6 +21,8 @@ import com.fasterxml.jackson.core.sym.ByteQuadsCanonicalizer;
 import com.fasterxml.jackson.core.sym.CharsToNameCanonicalizer;
 import com.fasterxml.jackson.core.util.*;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * The main factory class of Jackson package, used to configure and
  * construct
@@ -372,6 +374,10 @@ public class JsonFactory
      */
     public JsonFactory() { this((ObjectCodec) null); }
 
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "ObjectCodec sharing is intentional for data-binding"
+    )
     public JsonFactory(ObjectCodec oc) {
         _recyclerPool = JsonRecyclerPools.defaultPool();
         _objectCodec = oc;
@@ -1162,7 +1168,10 @@ public class JsonFactory
     /* Configuration, other
     /**********************************************************
      */
-
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "RecyclerPool sharing is intentional for buffer recycling"
+    )
     public JsonFactory setRecyclerPool(RecyclerPool<BufferRecycler> p) {
         _recyclerPool = Objects.requireNonNull(p);
         return this;
@@ -1179,6 +1188,10 @@ public class JsonFactory
      *
      * @return This factory instance (to allow call chaining)
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "ObjectCodec sharing is intentional for data-binding"
+    )
     public JsonFactory setCodec(ObjectCodec oc) {
         _objectCodec = oc;
         return this;
