@@ -155,13 +155,15 @@ public class ContentReference
      * is not to be exposed: different from {@link #unknown()} where
      * content is not available to be referenced.
      *
-     * @return Placeholder instance to use in cases where reference is explicitly
-     *   blocked, usually for security reasons.
+     * Returns a new instance instead of the shared static REDACTED_CONTENT
+     * to avoid exposing internal static mutable state
+     * (SpotBugs: public static method may expose internal representation).
      *
      * @since 2.16
      */
     public static ContentReference redacted() {
-        return REDACTED_CONTENT;
+        // Defensive copy: create a new instance with the same logical values
+        return new ContentReference(false, null, ErrorReportConfiguration.defaults());
     }
 
 
