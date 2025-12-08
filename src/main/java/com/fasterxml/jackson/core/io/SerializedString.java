@@ -68,8 +68,9 @@ public class SerializedString
     protected transient String _jdkSerializeValue;
 
     private void readObject(ObjectInputStream in) throws IOException {
-        _jdkSerializeValue = in.readUTF();
+        _jdkSerializeValue = DataInputStream.readUTF(in); // safe, non-overridable
     }
+
 
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.writeUTF(_value);
